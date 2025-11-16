@@ -12,10 +12,20 @@ class LeadScoreCrew():
         )
     
     @task
-    def evaluate_candidate()-> Task:
+    def evaluate_candidate(self)-> Task:
         return Task(
             config=self.tasks_config['evaluate_candidate'],
+            output_pydantic=CandidateScore,
             verbose=True
         )
     
     
+    @crew
+    def crew(self):
+        return Crew(
+            agents=self.agents,
+            tasks=self.tasks,
+            process=Process.sequential,
+            verbose=True
+        )
+
